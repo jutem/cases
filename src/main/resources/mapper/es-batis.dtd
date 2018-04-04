@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!ELEMENT mapper (resultMap+)>
+
+<!ELEMENT resultMap (property+)>
+<!ATTLIST resultMap
+id CDATA #REQUIRED
+type CDATA #REQUIRED
+>
+
+<!ELEMENT property EMPTY>
+<!ATTLIST property
+term CDATA #REQUIRED
+property CDATA #REQUIRED
+type CDATA #IMPLIED
+>

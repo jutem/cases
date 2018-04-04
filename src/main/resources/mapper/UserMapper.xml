@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//jutem.com//DTD Mapper 1.0//EN" "es-batis.dtd">
+
+<mapper>
+  <resultMap id="BaseResultMap" type="test">
+    <property term="id" property="id" type="BIGINT" />
+    <property term="name" property="name" type="TIMESTAMP" />
+  </resultMap>
+</mapper>
