@@ -1,10 +1,8 @@
 package com.jutem.cases.structure;
 
-import lombok.val;
-import org.apache.lucene.util.CollectionUtil;
-import org.assertj.core.util.Lists;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -121,5 +119,94 @@ public class Tree {
         levelorderRecursion(result, childNodes);
     }
 
+    /**
+     * 深度计算,前序遍历
+     */
+    private static int MAX_DEPTH = 0;
+    public int preorderMaxDepth(TreeNode root) {
+        depthRecursion(root, 0);
+        Integer res = MAX_DEPTH;
+        MAX_DEPTH = 0;
+        return res;
+    }
+
+    private void depthRecursion(TreeNode root, int depth) {
+        if(root == null) {
+            return;
+        }
+
+        depth ++;
+        if(isLeaf(root)) {
+            MAX_DEPTH = Math.max(depth , MAX_DEPTH);
+            return;
+        }
+
+        depthRecursion(root.left, depth);
+        depthRecursion(root.right, depth);
+    }
+
+    private boolean isLeaf(TreeNode root) {
+        return root.right == null && root.left == null;
+    }
+
+    /**
+     * 深度计算, 后续遍历
+     */
+    public int postorderMaxDepth(TreeNode root) {
+        if(root == null) {
+            return 0;
+        }
+        return Math.max(postorderMaxDepth(root.left), postorderMaxDepth(root.right)) + 1;
+    }
+
+    /**
+     * 镜像对称,层序遍历
+     */
+    public boolean isSymmetric(TreeNode root) {
+        if(root == null) {
+            return true;
+        }
+
+        List<TreeNode> levelNodes = new ArrayList<>();
+        levelNodes.add(root);
+        return symmetricRecursion(levelNodes);
+    }
+
+    public boolean symmetricRecursion(List<TreeNode> sortedNodes) {
+        if(sortedNodes == null || sortedNodes.size() == 0) {
+            return true;
+        }
+
+        for (int left = 0, right = sortedNodes.size() - 1; left < right ; left ++ , right --) {
+            TreeNode leftNode = sortedNodes.get(left);
+            TreeNode rightNode = sortedNodes.get(right);
+            if(!nodeEquals(leftNode, rightNode)) {
+                return false;
+            }
+        }
+
+        List<TreeNode> nextLevel = new ArrayList<>();
+        sortedNodes.forEach(n -> {
+            if(n == null) {
+                return;
+            }
+            nextLevel.add(n.left);
+            nextLevel.add(n.right);
+        });
+
+        return symmetricRecursion(nextLevel);
+    }
+
+    private boolean nodeEquals(TreeNode n1, TreeNode n2) {
+        if(n1 == null && n2 == null) {
+            return true;
+        }
+
+        if(n1 != null && n2 != null && n1.val == n2.val) {
+            return true;
+        }
+
+        return false;
+    }
 
 }
