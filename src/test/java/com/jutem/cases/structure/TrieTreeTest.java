@@ -1,7 +1,5 @@
 package com.jutem.cases.structure;
 
-import com.jutem.cases.structure.trieTree.TrieNode;
-import com.jutem.cases.structure.trieTree.TrieTree;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;

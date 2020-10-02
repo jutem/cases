@@ -1,6 +1,5 @@
 package com.jutem.cases.structure;
 
-import com.jutem.cases.structure.common.Gcd;
 import org.junit.Test;
 
 public class GcdTest {

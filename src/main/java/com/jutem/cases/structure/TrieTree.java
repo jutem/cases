@@ -1,4 +1,4 @@
-package com.jutem.cases.structure.trieTree;
+package com.jutem.cases.structure;
 
 import java.util.HashMap;
 import java.util.Map;

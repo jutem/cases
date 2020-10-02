@@ -1,4 +1,4 @@
-package com.jutem.cases.structure.common;
+package com.jutem.cases.structure;
 
 /**
  * 求最大公约数
