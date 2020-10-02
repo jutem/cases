@@ -1,9 +1,11 @@
 package com.jutem.cases.structure;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import lombok.val;
+import org.apache.lucene.util.CollectionUtil;
+import org.assertj.core.util.Lists;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 二叉树基本遍历
@@ -85,6 +87,39 @@ public class Tree {
         result.add(treeNode.val);
     }
 
+    /**
+     * 层序遍历
+     */
+    public static List<List<Integer>> levelorderTraversal(TreeNode root) {
+        if(root == null) {
+            return Collections.EMPTY_LIST;
+        }
+        List<List<Integer>> result = new ArrayList<>();
+        List<TreeNode> rootList = new ArrayList<>();
+        rootList.add(root);
+        levelorderRecursion(result, rootList);
+        return result;
+    }
+
+    private static void levelorderRecursion(List<List<Integer>> result, List<TreeNode> treeNodes) {
+        if(treeNodes == null || treeNodes.size() == 0) {
+            return;
+        }
+        List<Integer> levelList = treeNodes.stream().map(n -> n.val).collect(Collectors.toList());
+        result.add(levelList);
+
+        List<TreeNode> childNodes = new ArrayList<>();
+        treeNodes.forEach(n -> {
+            if(n.left != null) {
+                childNodes.add(n.left);
+            }
+            if(n.right != null) {
+                childNodes.add(n.right);
+            }
+        });
+
+        levelorderRecursion(result, childNodes);
+    }
 
 
 }
