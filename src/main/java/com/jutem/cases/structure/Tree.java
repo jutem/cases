@@ -1,8 +1,6 @@
 package com.jutem.cases.structure;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -223,6 +221,82 @@ public class Tree {
             return false;
         }
         return p.val == q.val && check(p.left, q.right) && check(p.right, q.left);
+    }
+
+    /**
+     * 路径总和
+     */
+    public boolean hasPathSum(TreeNode root, int sum) {
+        return hasPathSumRecursion(root, 0, sum);
+    }
+
+    private boolean hasPathSumRecursion(TreeNode node, int now, int sum) {
+        if(node == null) {
+            return false;
+        }
+        now += node.val;
+        if(isLeaf(node)) {
+            return now == sum;
+        }
+
+        return hasPathSumRecursion(node.left, now, sum) || hasPathSumRecursion(node.right, now, sum);
+    }
+
+
+    /**
+     * 从中序与后序遍历序列构造二叉树
+     */
+    private Integer postIndex = 0;
+    private Map<Integer, Integer> indexMap = new HashMap<>();
+    public TreeNode buildTreeInPost(int[] inorder, int[] postorder) {
+        postIndex = postorder.length - 1;
+        for (int i = 0; i < inorder.length; i++) {
+            indexMap.put(inorder[i], i);
+        }
+        return buildTreeInPostRecursion(0, inorder.length - 1, postorder);
+    }
+
+    private TreeNode buildTreeInPostRecursion(int leftIndex, int rightIndex, int[] postorder) {
+        //使用中序遍历判断是否还有子树
+        if(leftIndex > rightIndex) {
+            return null;
+        }
+
+        TreeNode node = new TreeNode(postorder[postIndex]);
+        postIndex --;
+
+        Integer inIndex = indexMap.get(node.val);
+
+        node.right = buildTreeInPostRecursion(inIndex + 1, rightIndex, postorder);
+        node.left = buildTreeInPostRecursion(leftIndex, inIndex  - 1 , postorder);
+        return node;
+    }
+
+    /**
+     * 从中序与前序遍历序列构造二叉树
+     */
+    private Integer preIndex = 0;
+    public TreeNode buildTreeInPre(int[] preorder, int[] inorder) {
+        preIndex = 0;
+        for (int i = 0; i < inorder.length; i++) {
+            indexMap.put(inorder[i], i);
+        }
+        return buildTreeInPreRecursion(0, inorder.length - 1, preorder);
+    }
+
+    private TreeNode buildTreeInPreRecursion(int leftIndex, int rightIndex, int[] preorder) {
+        if(leftIndex > rightIndex) {
+            return null;
+        }
+
+        TreeNode node = new TreeNode(preorder[preIndex]);
+        preIndex ++;
+
+        Integer inIndex = indexMap.get(node.val);
+
+        node.left = buildTreeInPreRecursion(leftIndex, inIndex  - 1 , preorder);
+        node.right = buildTreeInPreRecursion(inIndex + 1, rightIndex, preorder);
+        return node;
     }
 
 }
