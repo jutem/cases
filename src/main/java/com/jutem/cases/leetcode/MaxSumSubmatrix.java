@@ -43,7 +43,7 @@ public class MaxSumSubmatrix {
                     sub[r] = preSumMatrix[r][c] - preSumMatrix[r][tc];
                 }
                 //3.一维数组求连续最大和
-                int[] htm = longestMaxSubSum(sub);
+                int[] htm = longestMaxSubSum(sub, k);
                 //4。记录结果
                 if(max < htm[2]) {
                     result[0] = htm[0];
