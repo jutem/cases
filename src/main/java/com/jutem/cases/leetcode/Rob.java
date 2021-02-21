@@ -1,5 +1,7 @@
 package com.jutem.cases.leetcode;
 
+import java.util.Arrays;
+
 /**
  * @author dawei.chen02@ele.me
  * @create 2020-12-20
@@ -58,38 +60,22 @@ public class Rob {
      * 环形数组rob
      * [2,3,2] 输出3
      * 所以如果是环形数组的话，实际上是增加了更多偷窃的限制
+     * 解题思路：
+     * 成环以后分类讨论
+     * 三种情况：
+     * 1.不【考虑】头尾元素， 2.【考虑】头元素，【不考虑】尾元素，3.【考虑】尾元素，【不考虑】头元素
+     * 由于23情况包含情况1，所以我们只考虑2，3即可
      */
     public int robLoop(int[] nums) {
         if(nums.length == 0) {
             return 0;
         }
-
-        int last1 = 0;
-        int last2 = 0;
-        int max = Integer.MIN_VALUE;
-        boolean firstRobed = false;
-        for (int i = 0; i < nums.length; i++) {
-            if(i != nums.length - 1) {
-                int now = Math.max(nums[i] + last2, last1);
-                max = Math.max(now, max);
-                last2 = last1;
-                last1 = now;
-            } else {
-                //如果是最后一个点，需要查看last2的方案里是否已经存在了i=0的点
-                if(nums[i] + last2 > last1) {
-                    if(!firstRobed) {
-                        max = Math.max(nums[i] + last2, max);
-                    } else {
-                        int now = Math.max(last2, last1);
-                        max = Math.max(now, max);
-                    }
-                } else {
-                    max = Math.max(last1, max);
-                }
-            }
+        if(nums.length == 1) {
+            return nums[0];
         }
-
-        return max;
+        int r1 = rob2(Arrays.copyOfRange(nums, 0, nums.length - 1));
+        int r2 = rob2(Arrays.copyOfRange(nums, 1, nums.length));
+        return Math.max(r1, r2);
     }
 
     public static void main(String[] args) {

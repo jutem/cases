@@ -19,4 +19,13 @@ package com.jutem.cases.leetcode;
  * 链接：https://leetcode-cn.com/leetbook/read/dynamic-programming-1-plus/5rlibc/
  */
 public class MaxSizeSlices {
+
+    /**
+     * 同样是打家劫舍
+     * @
+     */
+    public void maxSizeSlices() {
+
+    }
+
 }
