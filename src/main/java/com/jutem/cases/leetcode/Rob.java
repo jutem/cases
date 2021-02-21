@@ -54,6 +54,44 @@ public class Rob {
         return max;
     }
 
+    /**
+     * 环形数组rob
+     * [2,3,2] 输出3
+     * 所以如果是环形数组的话，实际上是增加了更多偷窃的限制
+     */
+    public int robLoop(int[] nums) {
+        if(nums.length == 0) {
+            return 0;
+        }
+
+        int last1 = 0;
+        int last2 = 0;
+        int max = Integer.MIN_VALUE;
+        boolean firstRobed = false;
+        for (int i = 0; i < nums.length; i++) {
+            if(i != nums.length - 1) {
+                int now = Math.max(nums[i] + last2, last1);
+                max = Math.max(now, max);
+                last2 = last1;
+                last1 = now;
+            } else {
+                //如果是最后一个点，需要查看last2的方案里是否已经存在了i=0的点
+                if(nums[i] + last2 > last1) {
+                    if(!firstRobed) {
+                        max = Math.max(nums[i] + last2, max);
+                    } else {
+                        int now = Math.max(last2, last1);
+                        max = Math.max(now, max);
+                    }
+                } else {
+                    max = Math.max(last1, max);
+                }
+            }
+        }
+
+        return max;
+    }
+
     public static void main(String[] args) {
         Rob rob = new Rob();
         int r = rob.rob(new int[]{1,2,3,1});
